@@ -24,33 +24,25 @@ self.addEventListener("activate", () => {
   self.clients.claim();
 })
 
-// self.addEventListener("fetch", (event) => {
-//   event.respondWith(
-//     caches.match(event.request).then((response) => {
-//       return response || fetch(event.request);
-//     })
-//   );
-// });
-
-self.addEventListener("fetch", (evt) => {
-    evt.respondWith(
+self.addEventListener("fetch", (event) => {
+    event.respondWith(
       caches.open(DATA_CACHE_NAME).then(cache => {
-        return fetch(evt.request)
+        return fetch(event.request)
           .then(response => {
             if (response.status === 200) {
-              cache.put(evt.request.url, response.clone());
+              cache.put(event.request.url, response.clone());
             }
             return response;
           })
           .catch(err => {
-            return cache.match(evt.request);
+            return cache.match(evnt.request);
           });
       }).catch(err => console.log(err))
     );
-  evt.respondWith(
+  event.respondWith(
     caches.open(CACHE_NAME).then(cache => {
-      return cache.match(evt.request).then(response => {
-        return response || fetch(evt.request);
+      return cache.match(event.request).then(response => {
+        return response || fetch(event.request);
       });
     })
   );
