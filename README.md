@@ -19,3 +19,5 @@ Offline Functionality:
 When online:
 
 - Offline entries should be added to tracker.
+
+# Screenshots
